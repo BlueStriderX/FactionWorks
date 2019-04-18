@@ -1,10 +1,8 @@
 {
   "required": true,
-  "package": "net.distortsm.example.mixin",
+  "package": "net.thederpgamer.factionworks.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "ExampleClientMixin",
-    "ExampleMainMenuMixin"
   ],
   "injectors": {
     "defaultRequire": 1

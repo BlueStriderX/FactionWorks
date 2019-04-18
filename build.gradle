@@ -29,6 +29,8 @@ dependencies {
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	// modCompile "net.fabricmc:fabric:${project.fabric_version}"
+	compile 'com.google.guava:guava:27.1-jre'
+	
 }
 
 processResources {
