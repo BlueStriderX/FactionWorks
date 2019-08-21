@@ -1,22 +1,24 @@
 package net.thederpgamer.factionworks.faction;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
-import com.google.common.collect.ArrayListMultimap;
-import net.distortsm.api.player.Player;
-import net.distortsm.api.player.Faction;
+import org.schema.game.common.data.player.PlayerState;
+import org.schema.game.common.data.player.faction.Faction;
+import com.google.common.collect.Multimap;
 
 public class Organization {
 
-		public static ArrayList<Faction> memberFactions = new ArrayList<Faction>();
-		public static Multimap<Faction, Player> members = ArrayListMultimap.create();
-		public static ArrayList<Faction> enemyFactions = new ArrayList<Faction>();
-		public static OrganizationInfo organizationInfo = new OrganizationInfo();
-		public static UUID orgUUID = UUID.randomUUID();
+	public ArrayList<Faction> memberFactions;
+	public Multimap<Faction, PlayerState> members;
+	public ArrayList<Faction> enemyFactions;
+	public OrganizationInfo organizationInfo;
+	public UUID orgUUID;
+	public ArrayList<PlayerState> organizationMods;
 	
-	public static OrganizationInfo getOrganizationInfo() {
-		return organizationInfo;
+	public void createOrg(String name, PlayerState creator, Faction creatorFaction) {
+		
+		this.memberFactions.add(creatorFaction);
+		this.members.put(creatorFaction, creator);
+		this.organizationMods.add(creator);
 	}
 }
