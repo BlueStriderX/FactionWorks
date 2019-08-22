@@ -14,6 +14,5 @@ public enum Government {
 	MILITARY_JUNTA,
 	CULT,
 	FASCIST,
-	TECHNOCRACY,
-	NOT_SET
+	TECHNOCRACY
 }
