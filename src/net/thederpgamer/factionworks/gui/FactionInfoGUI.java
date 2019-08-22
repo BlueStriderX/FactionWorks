@@ -5,11 +5,13 @@ import java.util.Observable;
 import java.util.Observer;
 import org.schema.game.client.controller.manager.ingame.faction.FactionControlManager;
 import org.schema.game.client.data.GameClientState;
+import org.schema.game.common.controller.PlayerFactionController;
 import org.schema.game.common.data.player.faction.FactionRelation.RType;
 import org.schema.schine.graphicsengine.core.Controller;
 import org.schema.schine.graphicsengine.core.GlUtil;
 import org.schema.schine.graphicsengine.forms.gui.GUIElement;
 import org.schema.schine.graphicsengine.forms.gui.GUIOverlay;
+import org.schema.schine.graphicsengine.forms.gui.GUITextOverlay;
 import org.schema.schine.input.InputState;
 import net.thederpgamer.factionworks.faction.FactionInfo;
 import net.thederpgamer.factionworks.faction.Government;
@@ -34,12 +36,8 @@ public class FactionInfoGUI extends GUIElement implements Observer{
 	public String factionDetails;
 	public GUIOverlay background;
 	public FactionLogoPanel factionLogoPanel;
-	public FactionNameTextBox factionNameTextBox;
-	public FactionOrganizationTextBox factionOrganizationTextBox;
-	public CurrentRelationTextBox currentRelationTextBox;
-	public LeaderTextBox leaderTextBox;
-	public GovernmentTextBox governmentTextBox;
 	public FactionDetailsPanel factionDetailsPanel;
+	public GUITextOverlay factionNameTextBox;
 	
 	
 	public void loadInfo(FactionInfo info, long player) throws NumberFormatException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, NoSuchMethodException {
@@ -78,7 +76,7 @@ public class FactionInfoGUI extends GUIElement implements Observer{
 			governmentString = "Theocracy";
 		} else if(gov == Government.THEOCRATIC_MONARCHY) {
 			governmentString = "Theocratic Monarchy";
-		} else if(gov == Government.NOT_SET) {
+		} else if(gov == null) {
 			governmentString = "No Government";
 		}
 		
@@ -89,6 +87,10 @@ public class FactionInfoGUI extends GUIElement implements Observer{
 		return ((GameClientState) this.getState()).getGlobalGameControlManager().getIngameControlManager().getPlayerGameControlManager().getFactionControlManager();
 	}
 
+	public PlayerFactionController getFactionController() {
+		return ((GameClientState) this.getState()).getPlayer().getFactionController();
+	}
+	
 	@Override
 	public void cleanUp() {
 		// TODO Auto-generated method stub
@@ -101,6 +103,8 @@ public class FactionInfoGUI extends GUIElement implements Observer{
 			this.doOrientation();
 		}
 
+		this.factionNameTextBox.getText().set(0, this.getFactionController().getFactionName());
+		
 		GlUtil.glPushMatrix();
 		this.transform();
 		this.drawAttached();
@@ -117,12 +121,9 @@ public class FactionInfoGUI extends GUIElement implements Observer{
 		this.factionLogoPanel.onInit();
 		this.background.attach(factionLogoPanel);
 		
-		this.factionNameTextBox = new FactionNameTextBox(this.getState());
-		this.factionOrganizationTextBox = new FactionOrganizationTextBox(this.getState());
-		this.currentRelationTextBox = new CurrentRelationTextBox(this.getState());
-		this.leaderTextBox = new LeaderTextBox(this.getState());
-		this.governmentTextBox = new GovernmentTextBox(this.getState());
 		this.factionDetailsPanel = new FactionDetailsPanel(this.getState());
+		
+		this.factionNameTextBox = new GUITextOverlay(this.getState());
 		
 		this.attach(background);
 	}
