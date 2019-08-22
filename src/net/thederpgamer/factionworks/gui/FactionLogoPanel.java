@@ -57,14 +57,12 @@ public class FactionLogoPanel extends GUIElement implements Observer {
 
 	@Override
 	public float getWidth() {
-		// TODO Auto-generated method stub
-		return 0;
+		return width;
 	}
 
 	@Override
 	public float getHeight() {
-		// TODO Auto-generated method stub
-		return 0;
+		return height;
 	}
 	
 }
